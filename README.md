@@ -249,14 +249,4 @@ Through this project I learned:
 - Microservices Architecture
 - CI/CD Contract Validation
 
----
 
-## Author
-
-### Jayesh Patil
-
-Built as part of the Specmatic Learning Program.
-
-GitHub: https://github.com/YOUR_USERNAME
-
-LinkedIn: https://linkedin.com/in/YOUR_PROFILE
