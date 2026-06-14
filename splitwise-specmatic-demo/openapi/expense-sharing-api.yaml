@@ -1,0 +1,216 @@
+openapi: 3.0.0
+
+info:
+  title: Expense Sharing API
+  version: 1.0.0
+
+paths:
+  /groups:
+    post:
+      summary: Create Group
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGroupRequest"
+
+      responses:
+        "201":
+          description: Group Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupResponse"
+
+  /groups/{groupId}:
+    get:
+      summary: Get Group
+
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Group Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupResponse"
+
+        "404":
+          description: Group Not Found
+
+  /expenses:
+    post:
+      summary: Add Expense
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddExpenseRequest"
+
+      responses:
+        "201":
+          description: Expense Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseResponse"
+
+    get:
+      summary: Get Expenses
+
+      responses:
+        "200":
+          description: Expense List
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Expense"
+
+  /balances/{userId}:
+    get:
+      summary: View Balance
+
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Balance Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BalanceResponse"
+
+  /settlements:
+    post:
+      summary: Create Settlement
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SettlementRequest"
+
+      responses:
+        "201":
+          description: Settlement Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettlementResponse"
+
+components:
+  schemas:
+    CreateGroupRequest:
+      type: object
+      required:
+        - name
+
+      properties:
+        name:
+          type: string
+
+    GroupResponse:
+      type: object
+      properties:
+        groupId:
+          type: integer
+
+        name:
+          type: string
+
+    AddExpenseRequest:
+      type: object
+      required:
+        - groupId
+        - amount
+        - paidBy
+
+      properties:
+        groupId:
+          type: integer
+
+        amount:
+          type: number
+
+        paidBy:
+          type: integer
+
+    ExpenseResponse:
+      type: object
+      properties:
+        expenseId:
+          type: integer
+
+        status:
+          type: string
+
+    Expense:
+      type: object
+      properties:
+        expenseId:
+          type: integer
+
+        groupId:
+          type: integer
+
+        amount:
+          type: number
+
+        paidBy:
+          type: integer
+
+    BalanceResponse:
+      type: object
+      properties:
+        userId:
+          type: integer
+
+        totalOwed:
+          type: number
+
+        totalReceivable:
+          type: number
+
+    SettlementRequest:
+      type: object
+      required:
+        - payerId
+        - receiverId
+        - amount
+
+      properties:
+        payerId:
+          type: integer
+
+        receiverId:
+          type: integer
+
+        amount:
+          type: number
+
+    SettlementResponse:
+      type: object
+      properties:
+        settlementId:
+          type: integer
+
+        status:
+          type: string

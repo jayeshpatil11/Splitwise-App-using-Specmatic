@@ -1,0 +1,4 @@
+sources:
+  - provider: filesystem
+    provides:
+      - openapi/expense-sharing-api.yaml
